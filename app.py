@@ -1,27 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user, current_user
 import bcrypt
+from models import db, login_manager, User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'xnkjbdksheuopbcye'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Suresh$$$@localhost/sample'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-login_manager = LoginManager()
+db.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)  # bcrypt produces 60-character hash
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 @app.route('/')
 def index():
