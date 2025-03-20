@@ -5,7 +5,7 @@ from models import db, login_manager, User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'xnkjbdksheuopbcye'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Suresh$$$@localhost/sample'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Suresh$$$@localhost/newdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
